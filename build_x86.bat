@@ -27,7 +27,7 @@ SET ROOT=%ENV32_INSTALL%
 CALL build.bat Debug %ROOT%\%PACKAGE_NAME%
 CALL build.bat RelWithDebInfo %ROOT%\%PACKAGE_NAME%
 
-xcopy /Y /E /I .\package.cmake %ROOT%\%PACKAGE_NAME%
+xcopy /Y .\package.cmake %ROOT%\%PACKAGE_NAME%
 
 pushd %ROOT%
 

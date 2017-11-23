@@ -21,13 +21,23 @@ IF NOT DEFINED ENV64_INSTALL (
 
 SET ARCH=amd64
 SET BUILD=0
+SET PACKAGE_NAME=shapelib-1.3.0-%ARCH%-%BUILD%%TAG%
+SET ROOT=%ENV64_INSTALL%
 
-CALL build.bat Debug %ENV64_INSTALL%/shapelib-1.3.0-%ARCH%-%BUILD%%TAG%
-CALL build.bat RelWithDebInfo %ENV64_INSTALL%/shapelib-1.3.0-%ARCH%-%BUILD%%TAG%
+CALL build.bat Debug %ROOT%/%PACKAGE_NAME%
+CALL build.bat RelWithDebInfo %ENV64_INSTALL%/%PACKAGE_NAME%
 
-pushd %ENV64_INSTALL%
-7z a .\shapelib-1.3.0-%ARCH%-%BUILD%%TAG%.7z .\shapelib-1.3.0-%ARCH%-%BUILD%%TAG%
-rd /q /s .\shapelib-1.3.0-%ARCH%-%BUILD%%TAG%
+xcopy /Y .\package.cmake %ROOT%\%PACKAGE_NAME%
+
+pushd %ROOT%
+
+REM fix name
+pushd %PACKAGE_NAME%
+rename x64 lib
+popd
+
+7z a .\%PACKAGE_NAME%.7z .\%PACKAGE_NAME%
+rd /q /s .\%PACKAGE_NAME%
 popd
 
 SET END_TIME=%TIME%
