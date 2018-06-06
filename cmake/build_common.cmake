@@ -109,7 +109,6 @@ file(
         "${ROOT}/${PACKAGE_NAME}"
 )
 
-
 execute_process(
     COMMAND
         "${CMAKE_COMMAND}" -E tar cf "${PACKAGE_NAME}.7z" --format=7zip -- "${PACKAGE_NAME}"
