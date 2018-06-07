@@ -90,13 +90,6 @@ execute_process(
         "${RELEASE_PATH}"
 )
 
-execute_process(
-    COMMAND
-        "Ninja"
-    WORKING_DIRECTORY
-        "${RELEASE_PATH}"
-)
-
 file(
     REMOVE_RECURSE
     "${CMAKE_CURRENT_LIST_DIR}/../build/"
