@@ -54,7 +54,7 @@ set(
 
 execute_process(
     COMMAND
-        "${CMAKE_COMMAND}" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -G "Ninja" "../.."
+        "${CMAKE_COMMAND}" -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}  ../..
     WORKING_DIRECTORY
         "${DEBUG_PATH}"
 )
@@ -78,7 +78,7 @@ file(
 
 execute_process(
     COMMAND
-        "${CMAKE_COMMAND}" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -G "Ninja" "../.."
+        "${CMAKE_COMMAND}" -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} ../..
     WORKING_DIRECTORY
         "${RELEASE_PATH}"
 )
@@ -89,6 +89,16 @@ execute_process(
     WORKING_DIRECTORY
         "${RELEASE_PATH}"
 )
+
+if (WIN32) 
+    file(
+        COPY
+        ${DEBUG_PATH}/shapelibd.pdb
+        ${RELEASE_PATH}/shapelib.pdb
+        DESTINATION
+        "${CMAKE_INSTALL_PREFIX}/lib"
+    )
+endif()
 
 file(
     REMOVE_RECURSE
