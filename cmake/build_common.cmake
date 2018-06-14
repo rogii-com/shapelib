@@ -9,15 +9,15 @@ if(
 endif()
 
 set(
-	BUILD
-	0
+    BUILD
+    0
 )
 
 if(DEFINED ENV{BUILD_NUMBER})
-	set(
-		BUILD
-		$ENV{BUILD_NUMBER}
-	)
+    set(
+        BUILD
+        $ENV{BUILD_NUMBER}
+    )
 endif()
 
 set(
@@ -48,8 +48,8 @@ file(
 )
 
 set(
-	CMAKE_INSTALL_PREFIX
-	${ROOT}/${PACKAGE_NAME}
+    CMAKE_INSTALL_PREFIX
+    ${ROOT}/${PACKAGE_NAME}
 )
 
 execute_process(
@@ -102,11 +102,18 @@ file(
         "${ROOT}/${PACKAGE_NAME}"
 )
 
+if(UNIX)
+    execute_process(
+        COMMAND
+            ./split_debug_info.sh ${CMAKE_INSTALL_PREFIX}/lib/shapelib.so
+        WORKING_DIRECTORY
+            "${CMAKE_CURRENT_LIST_DIR}"
+    )
+endif()
+
 execute_process(
     COMMAND
         "${CMAKE_COMMAND}" -E tar cf "${PACKAGE_NAME}.7z" --format=7zip -- "${PACKAGE_NAME}"
     WORKING_DIRECTORY
         "${ROOT}"
 )
-
-
