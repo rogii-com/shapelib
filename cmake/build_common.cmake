@@ -98,6 +98,13 @@ if (WIN32)
         DESTINATION
         "${CMAKE_INSTALL_PREFIX}/lib"
     )
+elseif (UNIX)
+    execute_process(
+        COMMAND
+            ./split_debug_info.sh ${CMAKE_INSTALL_PREFIX}/lib/shapelib.so
+        WORKING_DIRECTORY
+            "${CMAKE_CURRENT_LIST_DIR}"
+    )
 endif()
 
 file(
@@ -111,15 +118,6 @@ file(
     DESTINATION
         "${ROOT}/${PACKAGE_NAME}"
 )
-
-if(UNIX)
-    execute_process(
-        COMMAND
-            ./split_debug_info.sh ${CMAKE_INSTALL_PREFIX}/lib/shapelib.so
-        WORKING_DIRECTORY
-            "${CMAKE_CURRENT_LIST_DIR}"
-    )
-endif()
 
 execute_process(
     COMMAND
