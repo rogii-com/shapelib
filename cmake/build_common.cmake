@@ -30,11 +30,29 @@ if(DEFINED ENV{TAG})
         TAG
         "$ENV{TAG}"
     )
+else()
+    find_package(
+        Git
+    )
+
+    if(Git_FOUND)
+        execute_process(
+            COMMAND
+                ${GIT_EXECUTABLE} rev-parse --short HEAD
+            OUTPUT_VARIABLE
+                TAG
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        set(
+            TAG
+            "_${TAG}"
+        )
+    endif()
 endif()
 
 set(
     PACKAGE_NAME
-    "shapelib-1.3.0-${ARCH}-${BUILD}$ENV{TAG}"
+    "shapelib-1.3.0-${ARCH}-${BUILD}${TAG}"
 )
 
 set(
