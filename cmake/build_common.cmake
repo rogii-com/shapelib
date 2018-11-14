@@ -57,7 +57,7 @@ set(
 
 set(
     DEBUG_PATH
-    "${CMAKE_CURRENT_LIST_DIR}/../build/debug"
+    "${CMAKE_CURRENT_LIST_DIR}/../build/debug_${ARCH}"
 )
 
 file(
@@ -86,7 +86,7 @@ execute_process(
 
 set(
     RELEASE_PATH
-    "${CMAKE_CURRENT_LIST_DIR}/../build/release"
+    "${CMAKE_CURRENT_LIST_DIR}/../build/release_${ARCH}"
 )
 
 file(
@@ -108,7 +108,7 @@ execute_process(
         "${RELEASE_PATH}"
 )
 
-if (WIN32) 
+if(WIN32)
     file(
         COPY
         ${DEBUG_PATH}/shapelibd.pdb
@@ -116,7 +116,7 @@ if (WIN32)
         DESTINATION
         "${CMAKE_INSTALL_PREFIX}/lib"
     )
-elseif (UNIX)
+elseif(UNIX)
     execute_process(
         COMMAND
             ./split_debug_info.sh ${CMAKE_INSTALL_PREFIX}/lib/shapelib.so
@@ -124,11 +124,6 @@ elseif (UNIX)
             "${CMAKE_CURRENT_LIST_DIR}"
     )
 endif()
-
-file(
-    REMOVE_RECURSE
-    "${CMAKE_CURRENT_LIST_DIR}/../build/"
-)
 
 file(
     COPY
