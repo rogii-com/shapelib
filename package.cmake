@@ -10,8 +10,8 @@ add_library(
 
 if(MSVC)
     set_target_properties(
-	ShapeLib::library
-	PROPERTIES
+        ShapeLib::library
+        PROPERTIES
         IMPORTED_LOCATION
             "${CMAKE_CURRENT_LIST_DIR}/lib/shapelib.dll"
         IMPORTED_LOCATION_DEBUG
@@ -25,8 +25,8 @@ if(MSVC)
     )
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set_target_properties(
-    	ShapeLib::library
-    	PROPERTIES
+        ShapeLib::library
+        PROPERTIES
         IMPORTED_LOCATION
             "${CMAKE_CURRENT_LIST_DIR}/lib/shapelib.so"
         IMPORTED_LOCATION_DEBUG
@@ -36,12 +36,21 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     )
 endif()
 
-install(
-    FILES
-	$<TARGET_FILE:ShapeLib::library>
-    DESTINATION
-        .
-    COMPONENT
-        CNPM_RUNTIME
+set(
+    COMPONENT_NAMES
+
+    CNPM_RUNTIME_ShapeLib
+    CNPM_RUNTIME
 )
 
+foreach(COMPONENT_NAME ${COMPONENT_NAMES})
+    install(
+        FILES
+            $<TARGET_FILE:ShapeLib::library>
+        DESTINATION
+            .
+        COMPONENT
+            ${COMPONENT_NAME}
+        EXCLUDE_FROM_ALL
+    )
+endforeach()
