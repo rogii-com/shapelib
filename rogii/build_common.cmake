@@ -50,24 +50,42 @@ else()
     endif()
 endif()
 
+include(
+    "${CMAKE_CURRENT_LIST_DIR}/version.cmake"
+)
+
+set(
+    BUILD_PATH
+    "${CMAKE_CURRENT_LIST_DIR}/../build"
+)
+
 set(
     PACKAGE_NAME
-    "shapelib-1.3.0-${ARCH}-${BUILD}${TAG}"
+    "shapelib-${ROGII_PKG_VERSION}-${ARCH}-${BUILD}${TAG}"
+)
+
+set(
+    CMAKE_INSTALL_PREFIX
+    ${ROOT}/${PACKAGE_NAME}
 )
 
 set(
     DEBUG_PATH
-    "${CMAKE_CURRENT_LIST_DIR}/../build/debug_${ARCH}"
+    "${BUILD_PATH}/debug"
+)
+
+set(
+    RELEASE_PATH
+    "${BUILD_PATH}/release"
 )
 
 file(
     MAKE_DIRECTORY
     "${DEBUG_PATH}"
 )
-
-set(
-    CMAKE_INSTALL_PREFIX
-    ${ROOT}/${PACKAGE_NAME}
+file(
+    MAKE_DIRECTORY
+    "${RELEASE_PATH}"
 )
 
 execute_process(
@@ -76,7 +94,6 @@ execute_process(
     WORKING_DIRECTORY
         "${DEBUG_PATH}"
 )
-
 execute_process(
     COMMAND
         "${CMAKE_COMMAND}" --build . --target install
@@ -84,23 +101,12 @@ execute_process(
         "${DEBUG_PATH}"
 )
 
-set(
-    RELEASE_PATH
-    "${CMAKE_CURRENT_LIST_DIR}/../build/release_${ARCH}"
-)
-
-file(
-    MAKE_DIRECTORY
-    "${RELEASE_PATH}"
-)
-
 execute_process(
     COMMAND
-        "${CMAKE_COMMAND}" -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} ../..
+        "${CMAKE_COMMAND}"  -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} ../..
     WORKING_DIRECTORY
         "${RELEASE_PATH}"
 )
-
 execute_process(
     COMMAND
         "${CMAKE_COMMAND}" --build . --target install
@@ -127,9 +133,14 @@ endif()
 
 file(
     COPY
-        package.cmake
+        "${CMAKE_CURRENT_LIST_DIR}/package.cmake"
     DESTINATION
         "${ROOT}/${PACKAGE_NAME}"
+)
+
+file(
+    REMOVE_RECURSE
+    "${BUILD_PATH}"
 )
 
 execute_process(
@@ -138,3 +149,4 @@ execute_process(
     WORKING_DIRECTORY
         "${ROOT}"
 )
+

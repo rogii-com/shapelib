@@ -6,7 +6,7 @@ message(
 if(NOT DEFINED ENV{ENV_INSTALL})
     message(
         FATAL_ERROR
-        "You have to specify an install path via `ENV{ENV_INSTALL}' variable."
+        "You have to specify an install path via `ENV_INSTALL' variable."
     )
 endif()
 
