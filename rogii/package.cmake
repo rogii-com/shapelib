@@ -21,7 +21,7 @@ if(MSVC)
         IMPORTED_IMPLIB_DEBUG
             "${CMAKE_CURRENT_LIST_DIR}/lib/shapelibd.lib"
         INTERFACE_INCLUDE_DIRECTORIES
-            "${CMAKE_CURRENT_LIST_DIR}/shapelib-1.3.0"
+            "${CMAKE_CURRENT_LIST_DIR}/include"
     )
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set_target_properties(
@@ -32,7 +32,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         IMPORTED_LOCATION_DEBUG
             "${CMAKE_CURRENT_LIST_DIR}/lib/shapelibd.so"
         INTERFACE_INCLUDE_DIRECTORIES
-            "${CMAKE_CURRENT_LIST_DIR}/shapelib-1.3.0"
+            "${CMAKE_CURRENT_LIST_DIR}/include"
     )
 endif()
 

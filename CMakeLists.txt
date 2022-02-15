@@ -47,4 +47,5 @@ install(
     FILES
         shapefil.h
     DESTINATION
-        ./shapelib-1.3.0)
+        ./include)
+
