@@ -125,7 +125,7 @@ if(WIN32)
 elseif(UNIX)
     execute_process(
         COMMAND
-            ./split_debug_info.sh ${CMAKE_INSTALL_PREFIX}/lib/shapelib.so
+            bash ${CMAKE_CURRENT_SOURCE_DIR}/rogii/utils/split_debug_info.sh ${CMAKE_INSTALL_PREFIX}/lib/shapelib.so
         WORKING_DIRECTORY
             "${CMAKE_CURRENT_LIST_DIR}"
     )
